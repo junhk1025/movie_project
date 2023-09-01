@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	
+	<typeAliases>
+		<typeAlias type="com.project.movie.admin.chart.ChartDTO1" alias="cdto1"/>
+		<typeAlias type="com.project.movie.admin.chart.ChartDTO2" alias="cdto2"/>
+		<typeAlias type="com.project.movie.admin.chart.ChartDTO3" alias="cdto3"/>
+		<typeAlias type="com.project.movie.admin.chart.ChartDTO4" alias="cdto4"/>
+		<typeAlias type="com.project.movie.admin.chart.MovieDTO" alias="mdto"/>
+		<typeAlias type="com.project.movie.user.reservation.ReservationDTO" alias="rdto"/>
+		<typeAlias type="com.project.movie.admin.register.RegisterDTO" alias="regbdto"/>
+		<typeAlias type="com.project.movie.user.list.ListDTO" alias="ldto"/>
+		<typeAlias type="com.project.movie.user.info.InfoDTO" alias="Idto"/>
+	</typeAliases> 
+	
+</configuration>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

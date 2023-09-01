@@ -1,0 +1,566 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="movie">
+	
+	<!-- 지성 **************************************** -->
+	
+	<select id="chart1" resultType="cdto1">
+
+select name as itemName, to_char(day, 'yyyy/mm/dd') as day, sum(total) as cnt,
+sum( adult*10000 + teen*8000 + senior*6000  ) as totalPrice
+from 
+(select c.*, (select name from tblMovie where seq = movieSeq) as name  from
+(select b.*, (select movieSeq from tblScreenMovie where seq = screenMovieSeq ) as movieSeq from 
+(select a.*, (select screenMovieSeq from tblScreenInfo where seq = screenInfoSeq) as screenMovieSeq, (select day from tblScreenInfo where seq = screenInfoSeq) as day  from 
+(select r.*, (select screenInfoSeq from tblScreenTime where seq = r.screenTimeSeq) as screenInfoSeq
+from tblReservation r) a) b) c)
+where day between to_date('2020-03-31', 'yyyy/mm/dd')- 5 and to_date('2020-03-31', 'yyyy/mm/dd')
+group by name, day
+order by day
+	</select>
+	
+	<select id="chart2" resultType="cdto1">
+select itemname, day, sum(count)*3 as cnt, sum(price) as totalPrice from 
+(
+select buy.seq as seq ,buy.billSeq as billSeq, buy.count as count, (select item from tblSnack where tblSnack.seq = buy.snackseq) as item, 
+(select substr(item, 0, instr(item, ' ')) from tblSnack where tblSnack.seq = buy.snackseq) as itemname,
+(select price from tblSnack where tblSnack.seq = buy.snackseq)as price, 
+(select to_char(day, 'yyyy/mm/dd') from tblBill where tblBill.seq = buy.billSeq) as day
+from tblBuy buy
+) 
+where day between to_date('2020-03-31', 'yyyy/mm/dd')- 5 and to_date('2020-03-31', 'yyyy/mm/dd')
+group by itemname, day
+order by day
+	</select>
+	
+	
+	<select id="rank" resultType="cdto1">
+
+select name as itemName, sum(total) as cnt,
+sum( adult*10000 + teen*8000 + senior*6000  ) as totalPrice
+from 
+(select c.*, (select name from tblMovie where seq = movieSeq) as name  from
+(select b.*, (select movieSeq from tblScreenMovie where seq = screenMovieSeq ) as movieSeq from 
+(select a.*, (select screenMovieSeq from tblScreenInfo where seq = screenInfoSeq) as screenMovieSeq, (select day from tblScreenInfo where seq = screenInfoSeq) as day  from 
+(select r.*, (select screenInfoSeq from tblScreenTime where seq = r.screenTimeSeq) as screenInfoSeq
+from tblReservation r) a) b) c)
+where day between to_date('2020-03-31', 'yyyy/mm/dd')- 5 and to_date('2020-03-31', 'yyyy/mm/dd')
+group by name
+order by totalprice desc
+	</select>
+	
+	<select id="rank2" resultType="cdto1">
+select itemname, sum(count)*3 as cnt, sum(price)*3 as totalPrice from 
+(
+select buy.seq as seq ,buy.billSeq as billSeq, buy.count as count, (select item from tblSnack where tblSnack.seq = buy.snackseq) as item, 
+(select substr(item, 0, instr(item, ' ')) from tblSnack where tblSnack.seq = buy.snackseq) as itemname,
+(select price from tblSnack where tblSnack.seq = buy.snackseq)as price, 
+(select to_char(day, 'yyyy/mm/dd') from tblBill where tblBill.seq = buy.billSeq) as day
+from tblBuy buy
+) 
+where day between to_date('2020-03-31', 'yyyy/mm/dd')- 5 and to_date('2020-03-31', 'yyyy/mm/dd')+1
+group by itemname
+order by totalprice desc
+	</select>
+	
+	<select id="rank3" resultType="cdto1">
+
+select name as itemName, sum(total) as cnt,
+sum( adult*10000 + teen*8000 + senior*6000) as totalPrice
+from 
+(select c.*, (select name from tblMovie where seq = movieSeq) as name  from
+(select b.*, (select movieSeq from tblScreenMovie where seq = screenMovieSeq ) as movieSeq from 
+(select a.*, (select screenMovieSeq from tblScreenInfo where seq = screenInfoSeq) as screenMovieSeq, (select day from tblScreenInfo where seq = screenInfoSeq) as day  from 
+(select r.*, (select screenInfoSeq from tblScreenTime where seq = r.screenTimeSeq) as screenInfoSeq
+from tblReservation r) a) b) c)
+where day between to_date('2020-03-31', 'yyyy/mm/dd')- 5 and to_date('2020-03-31', 'yyyy/mm/dd')
+group by name
+order by totalprice desc
+	</select>
+	
+	<select id="rank4" resultType="cdto1">
+select itemname, sum(count)*3 as cnt ,sum(price)*3 as totalPrice from 
+(
+select buy.seq as seq ,buy.billSeq as billSeq, buy.count as count, (select item from tblSnack where tblSnack.seq = buy.snackseq) as item, 
+(select substr(item, 0, instr(item, ' ')) from tblSnack where tblSnack.seq = buy.snackseq) as itemname,
+(select price from tblSnack where tblSnack.seq = buy.snackseq)as price, 
+(select to_char(day, 'yyyy/mm/dd') from tblBill where tblBill.seq = buy.billSeq) as day
+from tblBuy buy
+) 
+where day between to_date('2020-03-31', 'yyyy/mm/dd')- 5 and to_date('2020-03-31', 'yyyy/mm/dd')+1
+group by itemname
+order by totalprice desc
+	</select>
+	
+	
+	<select id="chart3" resultType="cdto2" parameterType="String">
+
+
+select day as day,count(*) as cnt
+from
+(select a.*, fo.screenMovieSeq, fo.day,
+(select movieSeq from tblScreenMovie where fo.screenMovieSeq = seq)as movieseq
+from (
+select r.*, 
+(select screenInfoSeq from tblScreenTime where r.screenTimeSeq =seq ) as screenInfoSeq
+from tblReservation r) a inner join tblscreeninfo fo on a.screenInfoSeq = fo.seq) b 
+right outer join tblMovie m on b.movieseq = m.seq
+where movieseq=#{movieseq}
+group by day
+order by day
+
+
+	</select>
+	
+	
+	<select id="chart4" resultType="cdto3" parameterType="String">
+select 
+case when count(*) !=0 THEN round(count(case when gender = 1 then 1 end)/ count(*) * 100,1) else 0  END as man,
+case when count(*) !=0 THEN round(count(case when gender = 2 then 1 end)/ count(*) * 100,1) else 0 end as woman
+from (
+select b.*,
+(select gender from tbluser where seq = b.userseq)as gender,
+(select substr(jumin,0,2) from tbluser where seq = b.userseq)as jumin
+from
+(select a.*, fo.screenMovieSeq, fo.day,
+(select movieSeq from tblScreenMovie where fo.screenMovieSeq = seq)as movieseq
+from (
+select r.*, 
+(select screenInfoSeq from tblScreenTime where r.screenTimeSeq =seq ) as screenInfoSeq
+from tblReservation r) a inner join tblscreeninfo fo on a.screenInfoSeq = fo.seq) b 
+inner join tblMovie m on b.movieseq = m.seq
+where movieseq=#{movieseq})
+	</select>
+
+
+	<select id="chart5" resultType="cdto4" parameterType="String">
+select 
+case when count(*) !=0 THEN round(count(case when substr(age,0,1) = 1 then 1 end)/count(*) * 100,1) else 0 end as gen10 ,
+case when count(*) !=0 THEN round(count(case when substr(age,0,1) = 2 then 1 end)/count(*) * 100,1) else 0 end as gen20,
+case when count(*) !=0 THEN round(count(case when substr(age,0,1) = 3 then 1 end)/count(*) * 100,1) else 0 end as gen30,
+case when count(*) !=0 THEN round(count(case when substr(age,0,1) = 4 then 1 end)/count(*) * 100,1) else 0 end as gen40,
+case when count(*) !=0 THEN round(count(case when substr(age,0,1) = 5 then 1 end)/count(*) * 100,1) else 0 end as gen50,
+case when count(*) !=0 THEN round(count(case when substr(age,0,1) = 6 then 1 end)/count(*) * 100,1) else 0 end as gen60
+from (
+select b.*,
+(select gender from tbluser where seq = b.userseq)as gender,
+(select substr(jumin,0,2) from tbluser where seq = b.userseq)as jumin,
+CASE (select substr(jumin,8,1) from tbluser where seq = b.userseq) 
+    WHEN '1' THEN (to_char(sysdate,'YYYY') - ('19'|| (select substr(jumin,0,2) from tbluser where seq = b.userseq)))
+    WHEN '2' THEN (to_char(sysdate,'YYYY') - ('19' || (select substr(jumin,0,2) from tbluser where seq = b.userseq)))
+    WHEN '3' THEN (to_char(sysdate,'YYYY') - ('20' || (select substr(jumin,0,2) from tbluser where seq = b.userseq)))
+    WHEN '4' THEN (to_char(sysdate,'YYYY') - ('20' || (select substr(jumin,0,2) from tbluser where seq = b.userseq))) END AS age
+from
+(select a.*, fo.screenMovieSeq, fo.day,
+(select movieSeq from tblScreenMovie where fo.screenMovieSeq = seq)as movieseq
+from (
+select r.*, 
+(select screenInfoSeq from tblScreenTime where r.screenTimeSeq =seq ) as screenInfoSeq
+from tblReservation r) a inner join tblscreeninfo fo on a.screenInfoSeq = fo.seq) b 
+inner join tblMovie m on b.movieseq = m.seq
+where movieseq=#{movieseq})
+	</select>
+	
+	<select id="movie" resultType="mdto">
+select seq,name,age from tblMovie where openday between sysdate-90 and sysdate order by openday
+	</select>
+	
+	<select id="seat" resultType="rdto" parameterType="rdto">
+SELECT s.seat as seat, st.seq as seq FROM tblScreenTime st
+   INNER JOIN tblReservation r ON st.seq = r.screenTimeSeq
+      INNER JOIN tblSeat s ON r.seq = s.reservationSeq
+         WHERE st.seq = #{seq}
+	</select>
+	
+	<!-- 범진 **************************************** -->
+	
+	<!-- areaList(지역) -->
+	<select id="areaList" resultType="rdto">
+		SELECT * FROM tblArea order by seq asc
+	</select>
+
+	<!-- areaSpotList(지역,지점) -->
+	<select id="areaSpotList" resultType="rdto">
+		SELECT * FROM tblArea a INNER JOIN tblSpot s ON a.seq = s.areaSeq order by s.seq asc
+		<!-- select * from tblArea -->
+	</select>
+
+	<!-- spotList(지점) -->
+	<select id="spotList" parameterType="String" resultType="rdto">
+		SELECT spot from vwSpot where city = #{area} order by spotSeq asc
+		<!-- SELECT s.spot as spot FROM tblArea a INNER JOIN tblSpot s ON a.seq = s.areaSeq WHERE a.city = #{area} -->
+	</select>
+	
+	<!-- movieList(영화) -->
+	<select id="movieList" parameterType="rdto" resultType="rdto">
+		SELECT DISTINCT mv.name, mv.img, mv.age, ash.areaSeq, ash.city, ash.spotSeq, ash.spot, ash.hallSeq, ash.hall, sif.seq AS screenInfoSeq, sif.DAY, sif.dimension FROM tblMovie mv
+	INNER JOIN tblScreenMovie sm ON mv.seq = sm.movieSeq
+		INNER JOIN (SELECT a.seq AS areaSeq, a.city, s.seq as spotSeq, spot, h.seq AS hallSeq, h.hall AS hall FROM tblArea a 
+						INNER JOIN tblSpot s ON a.seq = s.areaSeq
+							INNER JOIN tblHall h ON s.seq = h.spotSeq) ash ON sm.spotSeq = ash.spotSeq
+			INNER JOIN tblScreenInfo sif ON sif.screenMovieSeq = sm.seq AND sif.hallseq = ash.hallSeq
+				INNER JOIN tblScreenTime st ON st.screenInfoSeq = sif.seq WHERE ash.spot = #{spot} and sif.DAY = #{day}
+	</select>
+	
+	<!-- movieScreenList(영화스크린타임) + 좌석 -->
+	<select id="movieScreenList" parameterType="rdto" resultType="rdto">
+		SELECT DISTINCT mss.*, (SELECT count(s.seat) AS cnt FROM tblReservation r
+	INNER JOIN tblSeat s ON r.seq = s.reservationSeq WHERE r.screenTimeSeq = mss.screenTimeSeq) AS seatCnt FROM vwMovieScreenSeat mss
+	INNER JOIN tblReservation r ON r.screenTimeSeq = mss.screenTimeSeq
+		INNER JOIN tblSeat s ON s.reservationSeq = r.seq
+			WHERE DAY = #{day} ORDER BY movieSeq, startTime
+	</select>
+	
+	<!-- movieClickList(영화 클릭시 영화리스트) -->
+	<select id="movieClickList" parameterType="rdto" resultType="rdto">
+		SELECT DISTINCT mss.movieSeq, mss.name, mss.img, mss.age, mss.areaSeq, mss.city, mss.spotSeq, mss.spot, mss.hallSeq, mss.hall, mss.screenInfoSeq, mss.DAY, mss.dimension FROM vwMovieScreenSeat mss
+	INNER JOIN tblReservation r ON r.screenTimeSeq = mss.screenTimeSeq
+		INNER JOIN tblSeat s ON s.reservationSeq = r.seq
+			WHERE DAY = #{day} AND name= #{name} and spot = #{spot}
+	</select>
+	
+	<!-- movieClickScreenList(영화 클릭시 영화스크린리스트) -->
+	<select id="movieClickScreenList" parameterType="rdto" resultType="rdto">
+		SELECT DISTINCT mss.*, (SELECT count(s.seat) AS cnt FROM tblReservation r
+	INNER JOIN tblSeat s ON r.seq = s.reservationSeq WHERE r.screenTimeSeq = mss.screenTimeSeq) AS seatCnt FROM vwMovieScreenSeat mss
+	INNER JOIN tblReservation r ON r.screenTimeSeq = mss.screenTimeSeq
+		INNER JOIN tblSeat s ON s.reservationSeq = r.seq
+			WHERE DAY = #{day} AND name=#{name} and spot = #{spot} ORDER BY movieSeq, startTime
+	</select>
+	
+	<!-- seatClickList(영화스크린 클릭시 좌석선택 버튼으로 hidden 값 보내기) -->
+	<select id="seatClickList" parameterType="rdto" resultType="rdto">
+		SELECT DISTINCT mss.movieSeq, mss.name, mss.img, mss.age, mss.areaSeq, mss.city, mss.spotSeq, mss.spot, mss.hallSeq, mss.hall, mss.screenInfoSeq, mss.DAY, mss.dimension, mss.screenTimeSeq, mss.startTime, mss.endTime FROM vwMovieScreenSeat mss
+	INNER JOIN tblReservation r ON r.screenTimeSeq = mss.screenTimeSeq
+		INNER JOIN tblSeat s ON s.reservationSeq = r.seq
+			WHERE DAY = #{day} AND name = #{name} and spot = #{spot} AND mss.screenTimeSeq = #{screenTimeSeq}
+	</select>
+	
+	<!-- reservedSeatList(예약된 좌석 리스트) -->
+	<select id="reservedSeatList" parameterType="rdto" resultType="rdto">
+		SELECT * FROM tblScreenTime st
+	INNER JOIN tblReservation r ON st.seq = r.screenTimeSeq
+		INNER JOIN tblSeat s ON r.seq = s.reservationSeq
+			WHERE st.seq = #{screenTimeSeq}
+	</select>
+	
+	<!-- reserveResult(예약 삽입) -->
+	<insert id="reserveResult" parameterType="rdto">
+		INSERT INTO tblReservation VALUES (tblReservation_seq.nextval, #{adult}, #{teen}, #{senior}, #{total}, 1, #{screenTimeSeq})
+	</insert>
+
+	<!-- reservePayResult(예매 금액) -->
+	<insert id="reservePayResult" parameterType="rdto">
+		INSERT INTO tblReservePay VALUES (tblReservePay_seq.nextval, #{totalPrice}, (SELECT max(seq) FROM tblReservation))
+	</insert>
+	
+	<!-- seatResult(좌석 삽입) -->
+	<insert id="seatResult" parameterType="java.util.ArrayList">
+		insert all
+		<foreach collection="list" item="i" index="index" separator=" ">
+		
+			INTO tblSeat VALUES (get_seq, #{i}, (SELECT max(seq) FROM tblReservation))
+		
+		</foreach>
+		select * from dual
+	</insert>
+	
+	
+	<!-- saleResult(할인 삽입) -->
+	<insert id="saleResult" parameterType="rdto">
+		INSERT INTO tblSale VALUES (tblSale_seq.nextval, #{saleWay}, #{discountPrice}, (SELECT max(seq) FROM tblReservation))
+	</insert>
+	
+	<!-- payResult(결제 삽입) -->
+	<insert id="payResult" parameterType="rdto">
+		INSERT INTO tblPay VALUES (tblPay_seq.nextval, #{payWay}, #{payPrice}, (SELECT max(seq) FROM tblSale))
+	</insert>
+	
+	<!-- mileageResult(마일리지 삽입) -->
+	<insert id="mileageResult" parameterType="rdto">
+		INSERT INTO tblMileage VALUES (tblMileage_seq.nextval, #{detail}, #{point}, 1, (SELECT max(seq) FROM tblSale))
+	</insert>
+	
+	
+	
+	
+	
+	
+	
+	<!-- 민선 **************************************** -->
+	
+	<select id="adminmain" resultType="com.project.movie.MovieDTO" parameterType="String">
+		select * from 
+		(select rate.*, rownum as rank
+		from (
+		    select a.*from(
+		        select
+		        m.seq,
+		        m.name,
+		        m.img,
+		        (select round(avg(grade), 2) from tblreview re where re.movieseq = m.seq) as avggrade,
+		        round((RATIO_TO_REPORT( sum(total) ) OVER( ) *100),1)as rate
+		        from
+		        tblMovie m
+		        left join tblscreenmovie sm on m.seq = sm.movieseq
+		        left join tblscreeninfo si on sm.seq=si.screenmovieseq
+		        left join tblscreentime st on si.seq= st.screeninfoseq
+		        left join tblreservation r on st.seq=r.screentimeseq where sm.state=1 group by m.name, m.seq, m.img, m.age)  a
+		        order by ${value} desc nulls last, name 
+		        ) rate
+		        ) where rank between 1 and 8
+	</select>
+	
+	<select id="mypage" resultType="com.project.movie.MovieDTO" parameterType="String">
+		select u.seq, u.id, (select sum(point) from tblmileage where userseq=u.seq) as point from tbluser u where u.id = #{id}
+	</select>
+	
+	<select id="reserveList" resultType="com.project.movie.MovieDTO" parameterType="hashmap">
+		select rownum as rnum, u.seq, u.id, m.name, sp.spot, h.hall, si.day, st.starttime, p.payprice from tblmovie m
+                join tblscreenmovie sm on m.seq = sm.movieseq
+                join tblspot sp on sp.seq = sm.spotseq
+                join tblhall h on h.spotseq = sp.seq
+                join tblscreeninfo si on si.screenmovieseq=sm.seq and si.hallseq=h.seq
+                join tblscreentime st on st.screeninfoseq=si.seq
+                join tblreservation r on r.screentimeseq = st.seq
+                join tbluser u on r.userseq = u.seq
+                join tblsale s on s.reservationseq = r.seq
+                join tblpay p on p.saleseq = s.seq where u.id = #{id} and si.day between #{dto.starttime} and #{dto.endtime}
+	</select>
+	
+	
+	<!-- 준혁 **************************************** -->
+	
+	
+		<!-- addMovie.action -->
+	
+	<select id="country" resultType="regbdto">  <!-- mybatis.xml 에서 Alias 지정 -->
+		select seq as countrySeq, country from tblCountry order by countrySeq
+	</select>
+
+	<select id="genre" resultType="regbdto">
+		select seq as genreSeq, genre from tblGenre order by genreSeq
+	</select>
+	
+	<!-- addMovie.action -->
+
+
+
+	<!-- addMovieOK.action -->
+	
+	<!-- 영화 INSERT -->
+	<insert id="add" parameterType="regbdto">
+	
+
+		<selectKey keyProperty="movieSeq" resultType="integer" order="BEFORE">
+			select nvl(max(mv.seq + 1), 0) as movieSeq from tblMovie mv
+		</selectKey>
+		
+
+		insert into tblMovie 
+			values (
+			#{movieSeq}
+			, #{MVname}
+			, #{MVruntime}
+			, TO_DATE(#{MVopenday}, 'yyyy-mm-dd')
+			, #{MVstory}
+			, #{MVimg}
+			, #{MVdirector}
+			, #{MVage}
+			, #{genreSeq}
+			, #{countrySeq}
+			)
+		
+	</insert>
+	
+	<!-- 출연진 INSERT -->
+	<insert id="addCast" parameterType="regbdto">
+
+		insert into tblCast
+			values (
+			(select nvl(max(ca.seq + 1), 0) as castSeq from tblCast ca)
+			, #{movieSeq}
+			, #{actor}
+			)
+			
+	</insert>
+	
+
+	<!-- 스틸컷 INSERT -->
+	<insert id="addSteel" parameterType="regbdto">
+
+		insert into tblMovieImg
+			values (
+			(select nvl(max(mvi.seq + 1), 0) as steelSeq from tblMovieImg mvi)
+			, #{steelImg}
+			, #{movieSeq}
+			)
+			
+	</insert>
+	
+	
+	<!-- addMovieOK.action -->
+	
+	
+	<!-- 유진 -->
+	<select id="list" resultType="ldto" parameterType="hashmap">
+		select * from(
+		select a.*, rownum as rnum from(select rownum,v.* from(select * from vwlist where state =#{state} order by ${keyword} ${sort} )v)a) 
+		where rnum between ${begin} and ${end}
+	</select>
+	
+	
+	
+	<select id="get" resultType="Idto" parameterType="String">
+		select seq, age, name, img, total, rate, grade as totalgrade from vwlist where seq = #{seq}
+	</select>
+	
+	<select id="get2" resultType="Idto" parameterType="String">
+		select 
+g.seq, g.genre, m.name, m.runtime, m.openday, m.story, m.img, m.director, m.age, c.country, ca.actor 
+from tblgenre g left join tblmovie m on g.seq = m.genreseq 
+left join tblcountry c on m.countryseq = c.seq left join tblcast ca on m.seq = ca.movieseq where m.seq = #{seq}
+	</select>
+	
+	<select id="genderRate" resultType="Idto" parameterType="String">
+		select 
+case when count(*) !=0 THEN round(count(case when gender = 1 then 1 end)/ count(*) * 100,1) else 0  END as man,
+case when count(*) !=0 THEN round(count(case when gender = 2 then 1 end)/ count(*) * 100,1) else 0 end as woman
+from (
+select b.*,
+(select gender from tbluser where seq = b.userseq)as gender,
+(select substr(jumin,0,2) from tbluser where seq = b.userseq)as jumin
+from
+(select a.*, fo.screenMovieSeq, fo.day,
+(select movieSeq from tblScreenMovie where fo.screenMovieSeq = seq)as movieseq
+from (
+select r.*, 
+(select screenInfoSeq from tblScreenTime where r.screenTimeSeq =seq ) as screenInfoSeq
+from tblReservation r) a inner join tblscreeninfo fo on a.screenInfoSeq = fo.seq) b 
+inner join tblMovie m on b.movieseq = m.seq
+where movieseq=#{seq})
+	</select>
+	
+	<select id="ageRate" resultType="Idto" parameterType="String">
+select 
+case when count(*) !=0 THEN round(count(case when substr(age,0,1) = 1 then 1 end)/count(*)*100,1) else 0 end as gen10 ,
+case when count(*) !=0 THEN round(count(case when substr(age,0,1) = 2 then 1 end)/count(*)*100,1) else 0 end as gen20,
+case when count(*) !=0 THEN round(count(case when substr(age,0,1) = 3 then 1 end)/count(*)*100,1) else 0 end as gen30,
+case when count(*) !=0 THEN round(count(case when substr(age,0,1) = 4 then 1 end)/count(*)*100,1) else 0 end as gen40
+from (
+select b.*,
+(select gender from tbluser where seq = b.userseq)as gender,
+(select substr(jumin,0,2) from tbluser where seq = b.userseq)as jumin,
+CASE (select substr(jumin,8,1) from tbluser where seq = b.userseq) 
+    WHEN '1' THEN (to_char(sysdate,'YYYY') - ('19'|| (select substr(jumin,0,2) from tbluser where seq = b.userseq)))
+    WHEN '2' THEN (to_char(sysdate,'YYYY') - ('19' || (select substr(jumin,0,2) from tbluser where seq = b.userseq)))
+    WHEN '3' THEN (to_char(sysdate,'YYYY') - ('20' || (select substr(jumin,0,2) from tbluser where seq = b.userseq)))
+    WHEN '4' THEN (to_char(sysdate,'YYYY') - ('20' || (select substr(jumin,0,2) from tbluser where seq = b.userseq))) END AS age
+from
+(select a.*, fo.screenMovieSeq, fo.day,
+(select movieSeq from tblScreenMovie where fo.screenMovieSeq = seq)as movieseq
+from (
+select r.*, 
+(select screenInfoSeq from tblScreenTime where r.screenTimeSeq =seq ) as screenInfoSeq
+from tblReservation r) a inner join tblscreeninfo fo on a.screenInfoSeq = fo.seq) b 
+inner join tblMovie m on b.movieseq = m.seq)
+where movieseq=#{seq} and age&lt;50
+	</select>
+	
+	<select id="imgList" resultType="Idto" parameterType="String">
+		select
+		mi.img as simg
+		from tblMovie m left join tblMovieimg mi on m.seq = mi.movieseq where m.seq = #{seq}
+	</select>
+	
+	<select id="rList" resultType="Idto" parameterType="String">
+		select
+		a.*,
+		rownum as rnum
+		from
+		(select
+		u.id,
+		r.grade,
+		r.day,
+		r.img as fimg,
+		r.content,
+		(select
+		round(avg(grade),1)
+		from tblMovie m 
+		left join tblReview r on m.seq = r.movieseq left join tblUser u on r.userseq = u.seq where m.seq=#{seq}) as avgrade
+		from tblMovie m 
+		left join tblReview r on m.seq = r.movieseq left join tblUser u on r.userseq = u.seq where m.seq=#{seq} order by day desc)a where rownum between 1 and 10
+	</select>
+	
+	<select id="countList" resultType="Idto" parameterType="String">
+		select
+		a.*,
+		rownum as rnum
+		from
+		(select
+		u.id,
+		r.grade,
+		r.day,
+		r.img as fimg,
+		r.content,
+		(select
+		round(avg(grade),1)
+		from tblMovie m 
+		left join tblReview r on m.seq = r.movieseq left join tblUser u on r.userseq = u.seq where m.seq=#{seq}) as avgrade
+		from tblMovie m 
+		left join tblReview r on m.seq = r.movieseq left join tblUser u on r.userseq = u.seq where m.seq=#{seq} order by day desc)a
+	</select>
+	
+	<select id="rmlist" resultType="Idto" parameterType="hashmap">
+		select
+		*
+		from
+		(select
+		a.*,
+		rownum as rnum
+		from
+		(select
+		u.id,
+		r.grade,
+		r.day,
+		r.img as fimg,
+		r.content,
+		(select
+		round(avg(grade),1)
+		from tblMovie m 
+		left join tblReview r on m.seq = r.movieseq left join tblUser u on r.userseq = u.seq where m.seq=#{seq}) as avgrade
+		from tblMovie m 
+		left join tblReview r on m.seq = r.movieseq left join tblUser u on r.userseq = u.seq where m.seq=#{seq} order by day desc)a )where rnum between #{begin} and #{end}
+	</select>
+	
+	<insert id="reviewAdd"  parameterType="hashmap">
+		insert into tblreview values(tblReview_seq.nextval, #{userseq}, #{movieseq}, #{review}, #{grade}, sysdate, #{fimg})
+	</insert>
+	
+	<select id="getNew" resultType="Idto">
+		select seq, (select id from tblUser where seq = userseq) as id, movieseq, content, grade, day, img as fimg from tblreview where seq =(select max(seq) from tblreview)
+	</select>
+	
+	<select id="getAvg" resultType="Idto" parameterType="hashmap">
+		select
+round(avg(grade),1)as avgrade
+from tblmovie m left join tblreview r on m.seq = r.movieseq where r.movieseq=#{movieseq}
+	</select>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,314 @@
+
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css); .jejugothic * { font-family: 'Jeju Gothic', sans-serif; }
+
+
+
+.highcharts-figure, .highcharts-data-table table {
+    min-width: 360px; 
+    max-width: 800px;
+    margin: 1em auto;
+}
+
+.highcharts-data-table table {
+	font-family: Verdana, sans-serif;
+	border-collapse: collapse;
+	border: 1px solid #EBEBEB;
+	margin: 10px auto;
+	text-align: center;
+	width: 100%;
+	max-width: 500px;
+}
+.highcharts-data-table caption {
+    padding: 1em 0;
+    font-size: 1.2em;
+    color: #555;
+}
+.highcharts-data-table th {
+	font-weight: 600;
+    padding: 0.5em;
+}
+.highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
+    padding: 0.5em;
+}
+.highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
+    background: #f8f8f8;
+}
+.highcharts-data-table tr:hover {
+    background: #f1f7ff;
+}
+
+
+#content{
+	margin-top: 20px;
+	font-family: 'Jeju Gothic'; 
+	/* border: 1px solid black; */
+	height: 840px;
+	background-color: #fffffo;
+}
+#background{
+	border-radius: 10px;
+	/* border: 1px solid blue;  */
+	padding-top: 5px;
+	padding-bottom: 5px;
+	width: 1750px;
+	margin: 0px auto;
+	background-color: #A2A1A1;
+}
+
+#wrap1, #wrap2{
+	margin: 0px auto;
+	width: 1700px;
+	height: 400px;
+	position: relative;
+	top: 0px;
+	left: 26px;
+
+	/* border: 1px solid tomato;*/
+
+}
+#wrap1 > div { float: left;}
+#wrap1 > div > div{ float: left;}
+#btn1, #btn2{
+	font-family: 'Jeju Gothic'; 
+	color: white;
+	background-color: #5A5A5A;
+	width: 50px;
+	height: 200px;
+
+	
+}
+
+#section-1 > .btn-active{
+	background-color: #192246;
+}
+
+
+#section-1, #section-2{
+
+/* 	border: 1px solid blue; */
+	display: inline-block;
+	height: 400px;
+	
+}
+#section-1{
+	width: 50px;
+	
+}
+#section-2{
+
+	width: 1600px;
+	margin-left: 30px;
+
+
+}
+
+
+
+#chart1,#chart2, #movie-sales, #snack-sales{
+	width: 370px;
+	height: 370px;
+	border: 1px solid black;
+	display: inline-block;
+	margin-top: 10px;
+	border-radius: 10px;
+
+}
+#chart1{position: relative; left: 0px;}
+#chart2{position: relative; left: 30px;}
+#movie-sales{ position: relative; left: 60px; text-align: center; }
+#snack-sales{ position: relative; left: 90px; text-align: center; }
+#movie-sales, #snack-sales{ background-color: #3A3A3A;} 	
+
+#movie-sales-m1, #snack-sales-m1{
+	width:150px;
+	margin: 20px auto;
+	font-family: 'Jeju Gothic'; 
+	font-size: 1.5em;
+	color: white;
+	
+	
+}
+.movie-sales-m2, .snack-sales-m2{
+	display:inline-block;
+	width:80%;
+	text-align: left;
+ 	/* box-shadow:  5px 5px 2px black; */ 
+	/* border: 0.5px solid black; */ 
+ 	/* background-color: #5A5A5A; */
+	font-family: 'Jeju Gothic'; 
+	font-size: 1.3em;
+	margin-bottom: 18px;
+	
+	border-radius: 10px;
+	padding: 10px;
+	color: white;
+}
+.price {
+	color:gold;
+	font-size: 0.8em;
+	font-family: 'Jeju Gothic'; 
+	float: right;
+}
+
+
+/*범진*/
+.movie_select {
+      float: left;
+      width: 450px;
+      height: 90%;
+      border-bottom: 1px solid #DDD;
+   }
+
+.group_top {
+      background-color: black;
+      height: 45px;
+      text-align: center;
+      padding-top: 1px;
+   }
+
+.movie_area {
+   color: white;
+}
+.movie_list > ul > li > a{
+	color: black;
+	text-decoration: none;
+}
+.movie_list > ul > li > a:hover {
+      color: gray;
+
+   }
+
+   .movie_list {
+      background-color: #F5F5F5;
+      height: 336px;
+      overflow: scroll;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+   }
+
+   .movie_list a {
+      padding: 0px 20px;
+      width: 100%;
+   }
+
+   .movie_list ul {
+      padding-left: 0px;
+   }
+
+   .movie_list li {
+      display: block;
+      padding-top: 10px;
+      width: 100%;
+      height: 40px;
+   }
+
+   .age_limit img {
+      width: 20px;
+      height: 20px;
+   }
+
+   .movie_title {
+      margin-left: 10px;
+      padding-top: 10px;
+      font-weight: bold;
+   }
+   
+   .movieLi a {
+      padding-top: -10px;
+   }
+
+   .movie_list_active {
+      border: 2px solid black;
+   }
+   
+   .check {
+      color: #6F5D98;
+      float: right;
+      margin-right: 30px;
+      display: none;
+   }
+   
+   
+   
+   .highcharts-figure, .highcharts-data-table table {
+    min-width: 310px; 
+    max-width: 800px;
+    margin: 1em auto;
+}
+
+
+
+.highcharts-data-table table {
+	font-family: Verdana, sans-serif;
+	border-collapse: collapse;
+	border: 1px solid #EBEBEB;
+	margin: 10px auto;
+	text-align: center;
+	width: 100%;
+	max-width: 500px;
+}
+.highcharts-data-table caption {
+    padding: 1em 0;
+    font-size: 1.2em;
+    color: #555;
+}
+.highcharts-data-table th {
+	font-weight: 600;
+    padding: 0.5em;
+}
+.highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
+    padding: 0.5em;
+}
+.highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
+    background: #f8f8f8;
+}
+.highcharts-data-table tr:hover {
+    background: #f1f7ff;
+}
+
+#chart3, #chart4, #chart5 {
+	width: 370px;
+	height: 370px;
+	border: 1px solid black;
+	display: inline-block;
+	margin-top: 10px;
+	border-radius: 10px;
+	margin-left: 30px;
+}
+
+
+.highcharts-figure, .highcharts-data-table table {
+    min-width: 320px; 
+    max-width: 660px;
+    margin: 1em auto;
+}
+
+.highcharts-data-table table {
+	font-family: Verdana, sans-serif;
+	border-collapse: collapse;
+	border: 1px solid #EBEBEB;
+	margin: 10px auto;
+	text-align: center;
+	width: 100%;
+	max-width: 500px;
+}
+.highcharts-data-table caption {
+    padding: 1em 0;
+    font-size: 1.2em;
+    color: #555;
+}
+.highcharts-data-table th {
+	font-weight: 600;
+    padding: 0.5em;
+}
+.highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
+    padding: 0.5em;
+}
+.highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
+    background: #f8f8f8;
+}
+.highcharts-data-table tr:hover {
+    background: #f1f7ff;
+}
+
+

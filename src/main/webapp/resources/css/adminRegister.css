@@ -1,0 +1,483 @@
+/* main.css */
+
+/* @import url(//fonts.googleapis.com/earlyaccess/jejugothic.css); */
+
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+.jejugothic * {
+        font-family: "Jeju Gothic", sans-serif;
+}
+
+/* @font-face {
+        font-family: "GmarketSansMedium";
+        src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff") format("woff");
+        font-weight: normal;
+        font-style: normal;
+} */
+
+/* html, body, div, span, p, h1, h2, h3, h4, h5, h6, ul, ol, dl, li, dt, dd, input, a, textarea, select, option, table, th, td {
+	font-family: "Jeju Gothic", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+} */
+
+/* body,
+button,
+input,
+select,
+table,
+textarea {
+        font-family: "GmarketSansMedium";
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+} */
+
+body {
+        font-family: "Jeju Gothic";10
+        background-color: #666;
+}
+
+#bg {
+        background-color: #444;
+        width: 100%;
+        padding-top: 50px;
+        padding-bottom: 50px;
+}
+
+.insertContent {
+        width: 1500px;
+        margin: 0px auto;
+}
+
+.content {
+        width: 1500px;
+        background-color: white;
+        margin: 0px auto;
+        
+}
+
+#navLeft {
+        width: 100px;
+        float: left;
+}
+
+#navLeft ul,
+#navLeft li {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+}
+
+#navLeft a {
+        display: block;
+        height: 330px;
+        line-height: 300px;
+        text-align: center;
+}
+
+#reg{
+	height: 137px;
+}
+
+#navLeft a:hover {
+        text-decoration: none;
+}
+
+#navLeft .active a {
+        background-color: #192246;
+        color: white;
+}
+
+#navLeft .disabled a {
+        background-color: white;
+        border-bottom: 1px solid #666;
+        border-right: 1px solid #666;
+        color: #333;
+}
+
+#navLeft::after {
+        content: " ";
+        display: block;
+        clear: both;
+}
+
+#divHead {
+        width: 100%;
+        background-color: black;
+        color: white;
+        text-align: center;
+        height: 55px;
+        padding-top: 16px;
+}
+
+#divAdd {
+        float: left;
+}
+
+.add {
+        width: 1400px;
+        background-color: white;
+        color: #333;
+        height: 930px;
+}
+
+.add th {
+        width: 110px;
+        padding: 20px;
+        background-color: #f5f5f5;
+        text-align: center;
+}
+
+.add td {
+        padding: 20px;
+}
+
+
+.add td #name {
+        width: 500px;
+}
+
+.add td #datepicker,
+.add td #runtime {
+        width: 120px;
+}
+
+.add td #content {
+        height: 200px;
+}
+
+.add td .inputImg {
+       	width: 300px;
+       	border: 0px;
+}
+
+.add td .leftca {
+	float: left;
+}
+
+.add td .filebtn {
+	font-weight: bold;
+	border: 1px solid #666;
+}
+
+.add #posterImg {
+		width: 400px;
+        height: 250px;
+}
+
+.add #steelImg img {
+		width: 600px;
+        margin: 5px;
+}
+
+.add td #director {
+        width: 300px;
+}
+
+.add #country,
+.add #genre,
+.add #age {
+        width: 200px;
+}
+
+
+#bottomAdd {
+        width: 280px;
+        margin: 0px auto;
+        margin-top: 24px;
+}
+
+.insertBtn {
+        width: 100px;
+        font-size: 14px;
+}
+
+/* ------------------------------- 상영 영화 등록 --------------------------------------- */
+
+.cinema_info,
+.movie_select {
+        float: left;
+        width: 450px;
+        height: 100%;
+}
+
+.day_select {
+        float: left;
+        width: 500px;
+        height: 100%;
+}
+
+.group_top {
+        background-color: black;
+        height: 55px;
+        text-align: center;
+        padding-top: 16px;
+}
+
+.cinema_area,
+.movie_area,
+.movie_day {
+        color: white;
+}
+
+.inner_top {
+        width: 450px;
+        height: 60px;
+        text-align: center;
+        padding-top: 20px;
+        border-bottom: 1px solid #f5f5f5;
+        font-size: 16px;
+        font-weight: bold;
+}
+
+.areaSpot {
+        width: 450px;
+        height: 100%;
+}
+
+.area {
+        width: 225px;
+        height: 785px;
+        float: left;
+        background-color: #f5f5f5;
+        border-top: 2px solid black;
+}
+
+.area > ul {
+        padding-left: 0px;
+        height: 100%;
+}
+
+.areaLi,
+.spotLi {
+        display: block;
+        text-align: left;
+        height: 40px;
+        padding-top: 10px;
+        cursor: pointer;
+}
+
+.areaLi a,
+.spotLi a {
+        margin-top: 50px;
+}
+
+a {
+        color: #333;
+}
+
+.area > ul > li > a,
+.spot > ul > li > a {
+        padding: 12px 18px;
+        font-size: 13px;
+}
+
+.area > ul > li > a:hover,
+.movie_list > ul > li > a:hover {
+        color: black;
+        text-decoration: none;
+}
+
+.spot {
+        width: 225px;
+        height: 785px;
+        overflow: scroll;
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+}
+
+.spot > ul {
+        padding-left: 0px;
+}
+
+.spot > ul > li {
+        display: block;
+}
+
+.spot > ul > li > a:hover {
+        text-decoration: none;
+        color: red;
+}
+
+.select_top {
+        background-color: #f5f5f5;
+        border-bottom: 1px solid #ccc;
+}
+
+#sort {
+        /* margin-left: -250px; */
+        float: left;
+        width: 150px;
+        height: 30px;
+        font-size: 12px;
+        margin-left: 20px;
+        margin-top: -5px;
+}
+
+.sort {
+        display: inline-block;
+}
+
+.hamCube {
+        display: inline-block;
+        float: right;
+        margin-right: 10px;
+}
+
+#hamburg {
+        cursor: pointer;
+        padding: 1px 6px;
+}
+
+#cube {
+        cursor: pointer;
+        opacity: 0.5;
+        padding: 1px 6px;
+}
+
+.movie_list {
+        background-color: #f5f5f5;
+        height: 785px;
+        overflow: scroll;
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+}
+
+.movie_list a {
+        padding: 0px 20px;
+        width: 100%;
+}
+
+.movie_list ul {
+        padding-left: 0px;
+}
+
+.movie_list li {
+        display: block;
+        padding-top: 10px;
+        width: 100%;
+        height: 40px;
+}
+
+.age_limit img {
+        width: 20px;
+        height: 20px;
+}
+
+.movie_title {
+        margin-left: 10px;
+        padding-top: 10px;
+        font-weight: bold;
+}
+
+.area_active {
+        background-color: white;
+        font-weight: bold;
+}
+
+.check {
+        color: #6f5d98;
+        float: right;
+        margin-right: 30px;
+        display: none;
+}
+
+.spot_active {
+        font-weight: bold;
+        color: red;
+}
+
+.movieLi a {
+        padding-top: -10px;
+}
+
+.movie_list_active {
+        border: 2px solid black;
+}
+
+.time_top {
+        width: 500px;
+        height: 130px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+        font-size: 16px;
+        font-weight: bold;
+}
+
+.group_time_select ul,
+.group_time_select li {
+        padding: 0px;
+        margin: 0px;
+        list-style: none;
+}
+
+.group_time_select {
+        padding-left: 20px;
+        padding-top: 30px;
+        height: 715px;
+        overflow: scroll;
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+}
+
+.time_list {
+        margin-top: 20px;
+}
+
+.time_list li {
+        display: inline-block;
+        position: relative;
+        text-align: center;
+        width: 100px;
+        height: 40px;
+        line-height: 40px;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+        cursor: pointer;
+        font-weight: bold;
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(248, 248, 248, 1) 100%);
+        margin: 5px;
+}
+
+.time_list a {
+        display: block;
+}
+
+.time_list a:hover {
+        text-decoration: none;
+        color: black;
+}
+
+.time_depth {
+        margin-bottom: 30px;
+}
+
+.time_list ul {
+        margin-top: 20px;
+}
+
+.content::after {
+        content: " ";
+        display: block;
+        clear: both;
+}
+
+
+.insertContent::after {
+        content: " ";
+        display: block;
+        clear: both;
+}
+
+.calendar_nubi {
+        width: 500px;
+        margin-top: -20px;
+}
+
+.mbsc-ios.mbsc-fr-inline .mbsc-fr-w {
+        background: #fff;
+        border-top: none;
+}
+
+.mbsc-ios.mbsc-fr-inline .mbsc-fr-c {
+        border-bottom: 1px solid #e6e6e6;
+}
